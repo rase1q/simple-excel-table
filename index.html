@@ -22,31 +22,36 @@
       color: white;
       padding: 20px 0;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-bottom: 5px solid #388E3C;
+      font-family: 'Roboto', sans-serif;
     }
 
     header img {
-      height: 50px;
+      height: 60px;
       vertical-align: middle;
       margin-right: 10px;
     }
 
     header h1 {
       display: inline;
-      font-size: 28px;
+      font-size: 32px;
       vertical-align: middle;
+      font-weight: bold;
     }
 
     .content {
       text-align: center;
       margin-top: 50px;
-      max-width: 600px;
+      max-width: 700px;
+      padding: 0 20px;
     }
 
     .content p {
-      font-size: 18px;
-      color: #333;
+      font-size: 20px;
+      color: #444;
       margin-bottom: 40px;
+      line-height: 1.5;
     }
 
     .button-container {
@@ -60,35 +65,47 @@
       background-color: #4CAF50;
       color: white;
       border: none;
-      padding: 15px 25px;
-      font-size: 18px;
+      padding: 18px 28px;
+      font-size: 20px;
       cursor: pointer;
-      border-radius: 8px;
-      width: 260px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s, background-color 0.3s;
+      border-radius: 10px;
+      width: 270px;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .button-container button:hover {
-      background-color: #43a047;
+      background-color: #388E3C;
+      transform: scale(1.08);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .button-container button:active {
       transform: scale(1.05);
+      background-color: #2C6E2F;
     }
 
     footer {
       margin-top: auto;
       padding: 20px;
       text-align: center;
-      color: #666;
-      font-size: 14px;
+      color: #777;
+      font-size: 16px;
+    }
+
+    footer a {
+      text-decoration: none;
+      color: #388E3C;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
- <header>
- <img src="imglifecell-logo.png.png" alt="lifecell logo" style="height: 60px; margin-right: 10px;">
-  <h1>Результати конкурсу</h1>
-</header>
+  <header>
+    <img src="imglifecell-logo.png.png" alt="lifecell logo" style="height: 60px; margin-right: 10px;">
+    <h1>Результати конкурсу</h1>
+  </header>
 
   <div class="content">
     <p>Дякуємо всім учасникам за вашу активність та старанність! Нижче ви знайдете результати в різних категоріях. Перегляньте досягнення ваших колег та надихайтесь для нових звершень!</p>
@@ -101,7 +118,7 @@
   </div>
 
   <footer>
-     2025 lifecell
+    2025 lifecell | <a href="mailto:support@lifecell.com">Зв'язатися з нами</a>
   </footer>
 
 </body>
