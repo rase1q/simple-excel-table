@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ТОП 5 профі</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -59,41 +60,31 @@
   <a href="index.html" class="back-button">Назад на головну</a>
 
   <script>
-    // Підключення до Google Sheets API
-    const sheetId = '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U';  // ID таблиці
-    const apiKey = 'YOUR_GOOGLE_API_KEY';  // Твій API ключ
-
-    const sheetRange = 'Sheet1!A:D';  // Діапазон стовпців A, B, C, D на листі "Sheet1"
-
-    async function fetchData() {
-      const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetRange}?key=${apiKey}`);
-      const data = await response.json();
-      if (data.values) {
-        showData(data.values);
-      } else {
-        alert('Дані не знайдено або є проблема з доступом.');
-      }
-    }
+    // Підключення до Google Sheets через Tabletop.js
+    window.addEventListener('DOMContentLoaded', function() {
+      Tabletop.init({
+        key: '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U',  // ID таблиці
+        callback: showData,  // Функція для відображення даних
+        simpleSheet: true    // Показує лише дані (без мета-даних)
+      });
+    });
 
     function showData(data) {
       let html = '<table><tr><th>Ім\'я</th><th>Прізвище</th><th>Вік</th><th>Місто</th></tr>';
-      
-      // Пропускаємо заголовки першого ряду
-      for (let i = 1; i < data.length; i++) {
+
+      // Виведення даних
+      data.forEach(row => {
         html += `<tr>
-          <td>${data[i][0]}</td>
-          <td>${data[i][1]}</td>
-          <td>${data[i][2]}</td>
-          <td>${data[i][3]}</td>
+          <td>${row['Ім\'я']}</td>
+          <td>${row['Прізвище']}</td>
+          <td>${row['Вік']}</td>
+          <td>${row['Місто']}</td>
         </tr>`;
-      }
-      
+      });
+
       html += '</table>';
       document.getElementById('table-container').innerHTML = html;
     }
-
-    // Завантажуємо дані після завантаження сторінки
-    window.addEventListener('DOMContentLoaded', fetchData);
   </script>
 
 </body>
