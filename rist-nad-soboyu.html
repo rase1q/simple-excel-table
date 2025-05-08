@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ріст над собою</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      background-color: #2196F3;
+      color: white;
+      padding: 20px;
+      margin: 0;
+      font-size: 36px;
+      text-transform: uppercase;
+    }
+
+    button {
+      background-color: #2196F3;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1976D2;
+    }
+
+    #table-container {
+      margin: 30px auto;
+      width: 90%;
+      max-width: 1400px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #2196F3;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover td {
+      background-color: #f1f1f1;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .back-btn:hover {
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Ріст над собою</h1>
+  <a href="index.html">
+    <button class="back-btn">Назад</button>
+  </a>
+
+  <div id="table-container"></div>
+
+  <script>
+    const apiKey = 'AIzaSyC07kaEvAYKflsnVCntOW4dF6ymyPPDE98'; // ваш API ключ
+    const spreadsheetId = '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U'; // ID таблиці
+    const range = 'Sheet2!A:H'; // Аркуш і стовпці
+
+    function loadSheetData() {
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.values && data.values.length > 0) {
+            displayTable(data.values);
+          } else {
+            alert('Дані не знайдені!');
+          }
+        })
+        .catch(error => {
+          console.error('Помилка:', error);
+          alert('Щось пішло не так!');
+        });
+    }
+
+    function displayTable(data) {
+      let html = '<table><tr>';
+      data[0].forEach(header => {
+        html += `<th>${header}</th>`;
+      });
+      html += '</tr>';
+
+      data.slice(1).forEach(row => {
+        html += '<tr>';
+        row.forEach(cell => {
+          html += `<td>${cell}</td>`;
+        });
+        html += '</tr>';
+      });
+
+      html += '</table>';
+      document.getElementById('table-container').innerHTML = html;
+    }
+
+    window.onload = loadSheetData;
+  </script>
+
+</body>
+</html>
