@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ТОП 5 профі</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 36px;
+      color: #4CAF50;
+    }
+    table {
+      margin-top: 20px;
+      width: 80%;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ТОП 5 профі</h1>
+  <div id="table-container"></div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      Tabletop.init({
+        key: '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U', // ID твоєї Google Таблиці
+        callback: showData,
+        simpleSheet: true,
+        sheetName: 'Sheet1' // Аркуш з назвою "Sheet1"
+      });
+    });
+
+    function showData(data) {
+      let html = '<table><tr>';
+      
+      // Створюємо заголовки таблиці (A, B, C, D)
+      html += '<th>Ім\'я</th><th>Прізвище</th><th>Вік</th><th>Місто</th></tr>';
+      
+      // Виводимо рядки таблиці з даними
+      data.forEach(row => {
+        html += `<tr>
+          <td>${row.A}</td>
+          <td>${row.B}</td>
+          <td>${row.C}</td>
+          <td>${row.D}</td>
+        </tr>`;
+      });
+
+      html += '</table>';
+      document.getElementById('table-container').innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>
