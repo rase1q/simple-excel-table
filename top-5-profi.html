@@ -3,89 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ТОП 5 профі</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+  <title>Результати конкурсу</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 36px;
-      color: #4CAF50;
     }
     table {
-      margin-top: 20px;
       width: 80%;
+      margin: 20px auto;
       border-collapse: collapse;
-      border: 1px solid #ddd;
-      margin-left: auto;
-      margin-right: auto;
     }
     th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
     }
     th {
-      background-color: #4CAF50;
-      color: white;
+      background-color: #f2f2f2;
     }
-    tr:hover {
-      background-color: #f5f5f5;
-    }
-    .back-button {
-      margin-top: 20px;
+    button {
       padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
+      font-size: 16px;
+      margin: 10px;
       cursor: pointer;
-      text-decoration: none;
-      font-size: 18px;
-      border-radius: 5px;
     }
-    .back-button:hover {
-      background-color: #45a049;
+    button:hover {
+      background-color: #ddd;
     }
   </style>
 </head>
 <body>
+  <h1>Результати конкурсу</h1>
+  <button onclick="location.href='index.html'">Назад</button>
+  <button onclick="loadSheetData('top-5-profi')">ТОП 5 профі</button>
+  <button onclick="loadSheetData('rists-nad-soboyu')">Ріст над собою</button>
+  <button onclick="loadSheetData('top-4-profi-chat')">ТОП 4 профі чат</button>
 
-  <h1>ТОП 5 профі</h1>
   <div id="table-container"></div>
 
-  <a href="index.html" class="back-button">Назад на головну</a>
-
   <script>
-    // Підключення до Google Sheets через Tabletop.js
-    window.addEventListener('DOMContentLoaded', function() {
-      Tabletop.init({
-        key: '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U',  // ID таблиці
-        callback: showData,  // Функція для відображення даних
-        simpleSheet: true    // Показує лише дані (без мета-даних)
+    // Ваша API ключ
+    const apiKey = 'AIzaSyC07kaEvAYKflsnVCntOW4dF6ymyPPDE98'; // Замініть на ваш реальний API ключ
+
+    // ID вашої Google таблиці
+    const spreadsheetId = '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U'; // Замініть на ID вашої таблиці
+
+    function loadSheetData(sheetName) {
+      const range = sheetName + '!A:D'; // Запитуємо стовпці A, B, C, D з відповідного аркуша
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.values && data.values.length > 0) {
+            displayTable(data.values);
+          } else {
+            alert('Дані не знайдені!');
+          }
+        })
+        .catch(error => {
+          console.error('Помилка:', error);
+          alert('Щось пішло не так!');
+        });
+    }
+
+    function displayTable(data) {
+      let html = '<table><tr>';
+      
+      // Додаємо заголовки таблиці (перший рядок з даними)
+      data[0].forEach(header => {
+        html += `<th>${header}</th>`;
       });
-    });
+      html += '</tr>';
 
-    function showData(data) {
-      let html = '<table><tr><th>Ім\'я</th><th>Прізвище</th><th>Вік</th><th>Місто</th></tr>';
-
-      // Виведення даних
-      data.forEach(row => {
-        html += `<tr>
-          <td>${row['Агент']}</td>
-          <td>${row['Кількість унікальних звернень']}</td>
-          <td>${row['Кількість повторних звернень']}</td>
-          <td>${row['Поточний % повторних звернеь']}</td>
-        </tr>`;
+      // Додаємо рядки таблиці (інші дані)
+      data.slice(1).forEach(row => {
+        html += '<tr>';
+        row.forEach(cell => {
+          html += `<td>${cell}</td>`;
+        });
+        html += '</tr>';
       });
 
       html += '</table>';
       document.getElementById('table-container').innerHTML = html;
     }
   </script>
-
 </body>
 </html>
