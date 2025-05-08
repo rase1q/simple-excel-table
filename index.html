@@ -1,36 +1,55 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Таблиця з Google Sheets</title>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      // Завантаження бібліотеки
-      google.charts.load('current', {'packages':['table']});
-      google.charts.setOnLoadCallback(drawTable);
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Результати конкурсу</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #4CAF50;
+    }
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .button-container button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 250px;
+      transition: background-color 0.3s ease;
+    }
+    .button-container button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
 
-      function drawTable() {
-        var queryString = encodeURIComponent('SELECT A, B, C, D'); // Вкажіть потрібні стовпці
-        var dataSourceUrl = 'https://docs.google.com/spreadsheets/d/1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U/gviz/tq?sheet=Sheet1&headers=1&tq=' + queryString;
+  <h1>Результати конкурсу</h1>
 
-        var query = new google.visualization.Query(dataSourceUrl);
-        query.send(handleQueryResponse);
-      }
+  <div class="button-container">
+    <button onclick="window.location.href='top-5-profi.html'">ТОП 5 профі</button>
+    <button onclick="window.location.href='rist-nad-soboyu.html'">Ріст над собою</button>
+    <button onclick="window.location.href='top-4-profi-chat.html'">ТОП 4 профі чат</button>
+  </div>
 
-      function handleQueryResponse(response) {
-        if (response.isError()) {
-          alert('Помилка в запиті: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-          return;
-        }
-
-        var data = response.getDataTable();
-        var table = new google.visualization.Table(document.getElementById('table-container'));
-        table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-      }
-    </script>
-  </head>
-  <body>
-    <h1>Таблиця з Google Sheets</h1>
-    <div id="table-container"></div>
-  </body>
+</body>
 </html>
