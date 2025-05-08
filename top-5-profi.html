@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Результати конкурсу</title>
+  <title>ТОП 5 профі</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,25 +34,24 @@
   </style>
 </head>
 <body>
-  <h1>Результати конкурсу</h1>
+  <h1>ТОП 5 профі</h1>
   <button onclick="location.href='index.html'">Назад</button>
-  <button onclick="loadSheetData('top-5-profi')">ТОП 5 профі</button>
-  <button onclick="loadSheetData('rists-nad-soboyu')">Ріст над собою</button>
-  <button onclick="loadSheetData('top-4-profi-chat')">ТОП 4 профі чат</button>
 
   <div id="table-container"></div>
 
   <script>
-    // Ваша API ключ
+    // Ваш API ключ
     const apiKey = 'AIzaSyC07kaEvAYKflsnVCntOW4dF6ymyPPDE98'; // Замініть на ваш реальний API ключ
 
     // ID вашої Google таблиці
     const spreadsheetId = '1HyARqYKZZ87WUAtgtfGXq3alC_2VTnlGWPa7qb4-45U'; // Замініть на ID вашої таблиці
 
-    function loadSheetData(sheetName) {
-      const range = sheetName + '!A:D'; // Запитуємо стовпці A, B, C, D з відповідного аркуша
+    // Функція для завантаження даних
+    function loadSheetData() {
+      const range = 'Sheet1!A:D'; // Діапазон даних (стовпці A, B, C, D на аркуші Sheet1)
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
 
+      // Запит до API Google Sheets
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -68,6 +67,7 @@
         });
     }
 
+    // Функція для відображення таблиці
     function displayTable(data) {
       let html = '<table><tr>';
       
@@ -89,6 +89,9 @@
       html += '</table>';
       document.getElementById('table-container').innerHTML = html;
     }
+
+    // Завантажуємо дані при завантаженні сторінки
+    window.onload = loadSheetData;
   </script>
 </body>
 </html>
